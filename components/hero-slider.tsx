@@ -53,7 +53,7 @@ export function HeroSlider({ animeList }: HeroSliderProps) {
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
 
                         <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 md:pb-16 flex flex-col items-start gap-4">
-                            <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+                            <span className="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
                                 Trending
                             </span>
                             <h2 className="text-3xl md:text-5xl font-black text-white leading-tight max-w-2xl drop-shadow-lg line-clamp-2">
@@ -66,7 +66,7 @@ export function HeroSlider({ animeList }: HeroSliderProps) {
                             </div>
                             <div className="mt-4 flex gap-3">
                                 <Button
-                                    className="bg-blue-600 hover:bg-blue-700"
+                                    className="bg-purple-600 hover:bg-purple-700"
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     <Play className="w-5 h-5 mr-2" />
@@ -96,7 +96,7 @@ export function HeroSlider({ animeList }: HeroSliderProps) {
                             e.preventDefault();
                             setCurrentIndex(index);
                         }}
-                        className={`w-2 md:w-3 h-2 md:h-3 rounded-full transition-all ${index === currentIndex ? 'bg-blue-500 w-6 md:w-8' : 'bg-white/50 hover:bg-white'
+                        className={`w-2 md:w-3 h-2 md:h-3 rounded-full transition-all ${index === currentIndex ? 'bg-purple-500 w-6 md:w-8' : 'bg-white/50 hover:bg-white'
                             }`}
                     />
                 ))}

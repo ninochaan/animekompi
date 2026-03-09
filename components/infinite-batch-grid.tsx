@@ -78,7 +78,7 @@ export function InfiniteBatchGrid({ initialAnime, initialPage }: InfiniteBatchGr
             {/* Loading indicator */}
             {loading && (
                 <div className="flex justify-center items-center py-8">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
                 </div>
             )}
 

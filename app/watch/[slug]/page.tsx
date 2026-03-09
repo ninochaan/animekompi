@@ -97,9 +97,9 @@ async function WatchContent({ slug }: { slug: string }) {
                     <div className="max-w-4xl mx-auto">
                         {/* Breadcrumb */}
                         <div className="text-sm text-gray-400 mb-4 flex gap-2">
-                            <Link href="/" className="hover:text-blue-400">Home</Link>
+                            <Link href="/" className="hover:text-purple-400">Home</Link>
                             <span>/</span>
-                            <Link href={`/anime/${animeSlug}`} className="hover:text-blue-400">Detail</Link>
+                            <Link href={`/anime/${animeSlug}`} className="hover:text-purple-400">Detail</Link>
                             <span>/</span>
                             <span className="text-white truncate">{data.title}</span>
                         </div>

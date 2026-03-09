@@ -17,7 +17,7 @@ async function SearchContent({ query }: { query: string }) {
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-2xl font-bold text-white mb-6">
-                Search Results for: <span className="text-blue-400">&quot;{query}&quot;</span>
+                Search Results for: <span className="text-purple-400">&quot;{query}&quot;</span>
             </h1>
 
             {results.length > 0 ? (

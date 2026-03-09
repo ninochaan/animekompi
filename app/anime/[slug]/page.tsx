@@ -157,7 +157,7 @@ async function DetailContent({ slug }: { slug: string }) {
                                 {anime.info.genres.map((genre) => (
                                     <span
                                         key={genre}
-                                        className="bg-slate-800 text-cyan-400 text-xs px-3 py-1 rounded-full border border-cyan-500/20"
+                                        className="bg-slate-800 text-violet-400 text-xs px-3 py-1 rounded-full border border-violet-500/20"
                                     >
                                         {genre}
                                     </span>
@@ -174,7 +174,7 @@ async function DetailContent({ slug }: { slug: string }) {
                                 <Button
                                     asChild
                                     size="lg"
-                                    className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold mb-8 w-full md:w-auto"
+                                    className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-bold mb-8 w-full md:w-auto"
                                 >
                                     <Link href={`/watch/${anime.episodes[0].slug}`} className="flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

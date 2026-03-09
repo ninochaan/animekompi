@@ -31,7 +31,7 @@ export function EpisodeList({ episodes }: EpisodeListProps) {
         return (
             <div>
                 <h3 className="text-xl font-bold text-white flex items-center gap-2 mb-4">
-                    <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
+                    <span className="w-1 h-6 bg-purple-500 rounded-full"></span>
                     Episodes (0)
                 </h3>
                 <p className="text-gray-500">No episodes found.</p>
@@ -50,7 +50,7 @@ export function EpisodeList({ episodes }: EpisodeListProps) {
         <div>
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                    <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
+                    <span className="w-1 h-6 bg-purple-500 rounded-full"></span>
                     Episodes ({episodes.length})
                 </h3>
 
@@ -61,7 +61,7 @@ export function EpisodeList({ episodes }: EpisodeListProps) {
                         placeholder="Search episode..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="bg-black/20 border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:border-blue-500 text-white placeholder-gray-500"
+                        className="bg-black/20 border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:border-purple-500 text-white placeholder-gray-500"
                     />
                     <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-gray-400" />
                 </div>
@@ -76,7 +76,7 @@ export function EpisodeList({ episodes }: EpisodeListProps) {
                             key={ep.slug}
                             asChild
                             variant="secondary"
-                            className="bg-slate-900 hover:bg-blue-900 border border-white/5 hover:border-blue-500/50 transition-all h-auto flex-col items-start p-3"
+                            className="bg-slate-900 hover:bg-purple-900 border border-white/5 hover:border-purple-500/50 transition-all h-auto flex-col items-start p-3"
                         >
                             <Link href={`/watch/${ep.slug}`}>
                                 <span className="text-gray-400 text-xs text-left mb-1">{ep.date}</span>

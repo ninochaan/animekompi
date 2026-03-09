@@ -114,7 +114,7 @@ export function VideoPlayer({ title, servers, downloads, prevEpisode, nextEpisod
                                 onClick={() => setCurrentServer(index)}
                                 variant={currentServer === index ? 'default' : 'secondary'}
                                 size="sm"
-                                className={currentServer === index ? 'bg-blue-600 hover:bg-blue-700' : ''}
+                                className={currentServer === index ? 'bg-purple-600 hover:bg-purple-700' : ''}
                             >
                                 {server.name}
                             </Button>

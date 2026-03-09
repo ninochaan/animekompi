@@ -26,7 +26,7 @@ async function ScheduleContent() {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 mb-8">
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-violet-400 mb-8">
                 Weekly Schedule
             </h1>
 
@@ -44,10 +44,10 @@ async function ScheduleContent() {
 
                     return (
                         <div key={day}>
-                            <h2 className="text-xl font-bold text-white mb-4 border-l-4 border-blue-500 pl-3 flex items-center gap-2">
+                            <h2 className="text-xl font-bold text-white mb-4 border-l-4 border-purple-500 pl-3 flex items-center gap-2">
                                 {day}
                                 {isToday && (
-                                    <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">Today</span>
+                                    <span className="text-xs bg-purple-600 text-white px-2 py-1 rounded-full">Today</span>
                                 )}
                             </h2>
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">

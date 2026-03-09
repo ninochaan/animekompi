@@ -8,9 +8,9 @@ export const metadata: Metadata = {
   title: 'Nonton Anime Subtitle Indonesia Terbaru',
   description: 'Streaming anime subtitle Indonesia terbaru dan terlengkap. Update setiap hari dengan kualitas HD. Nonton anime ongoing, completed, dan download batch gratis.',
   openGraph: {
-    title: 'AnimeKompi - Nonton Anime Subtitle Indonesia Terbaru',
+    title: 'PrabowoSawit - Nonton Anime Subtitle Indonesia Terbaru',
     description: 'Streaming anime subtitle Indonesia terbaru dan terlengkap. Update setiap hari dengan kualitas HD.',
-    url: 'https://animekompi.fun',
+    url: 'https://prabowo.me',
     type: 'website',
   },
 };
@@ -30,7 +30,7 @@ async function HomeContent() {
       {/* Latest Updates */}
       <section className="container mx-auto px-4 mb-12">
         <h1 className="text-2xl font-bold mb-6 flex items-center gap-2">
-          <span className="w-1.5 h-8 bg-blue-500 rounded-full"></span>
+          <span className="w-1.5 h-8 bg-purple-500 rounded-full"></span>
           Latest Anime Updates - Subtitle Indonesia
         </h1>
         <InfiniteAnimeGrid initialAnime={animeList} initialPage={1} />

@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/api/', '/admin/'],
             },
         ],
-        sitemap: 'https://animekompi.fun/sitemap.xml',
+        sitemap: 'https://prabowo.me/sitemap.xml',
     };
 }

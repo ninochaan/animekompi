@@ -26,23 +26,23 @@ export function Navbar() {
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                        <div className="w-10 h-10 bg-gradient-to-tr from-purple-600 to-violet-500 rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
                             <Play className="h-6 w-6 text-white fill-white" />
                         </div>
-                        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 group-hover:to-cyan-400 transition-colors">
-                            AnimeKompi
+                        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 group-hover:to-violet-400 transition-colors">
+                            PrabowoSawit
                         </span>
                     </Link>
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
-                        <Link href="/" className="hover:text-blue-400 transition-colors">
+                        <Link href="/" className="hover:text-purple-400 transition-colors">
                             Home
                         </Link>
-                        <Link href="/schedule" className="hover:text-blue-400 transition-colors">
+                        <Link href="/schedule" className="hover:text-purple-400 transition-colors">
                             Jadwal
                         </Link>
-                        <Link href="/batch" className="hover:text-blue-400 transition-colors">
+                        <Link href="/batch" className="hover:text-purple-400 transition-colors">
                             Batch
                         </Link>
                     </nav>
@@ -54,7 +54,7 @@ export function Navbar() {
                             placeholder="Cari anime..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="bg-black/20 border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:border-blue-500 text-white w-48 transition-all focus:w-64 placeholder-gray-500"
+                            className="bg-black/20 border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:border-purple-500 text-white w-48 transition-all focus:w-64 placeholder-gray-500"
                         />
                         <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-gray-400" />
                     </form>
@@ -80,7 +80,7 @@ export function Navbar() {
                                 placeholder="Cari anime..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="bg-black/20 border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:border-blue-500 text-white w-full placeholder-gray-500"
+                                className="bg-black/20 border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:border-purple-500 text-white w-full placeholder-gray-500"
                             />
                             <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-gray-400" />
                         </form>
@@ -89,21 +89,21 @@ export function Navbar() {
                         <nav className="flex flex-col gap-2">
                             <Link
                                 href="/"
-                                className="hover:text-blue-400 transition-colors py-2"
+                                className="hover:text-purple-400 transition-colors py-2"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Home
                             </Link>
                             <Link
                                 href="/schedule"
-                                className="hover:text-blue-400 transition-colors py-2"
+                                className="hover:text-purple-400 transition-colors py-2"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Jadwal
                             </Link>
                             <Link
                                 href="/batch"
-                                className="hover:text-blue-400 transition-colors py-2"
+                                className="hover:text-purple-400 transition-colors py-2"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Batch
