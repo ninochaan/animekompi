@@ -27,30 +27,40 @@ async function fetchAPI<T>(endpoint: string): Promise<T> {
 
 // Transform Wajik API response to match our types
 function transformAnimeList(data: any, page: number = 1): any {
-    if (!data || !data.data) return { status: 'error', data: { page: 1, total_pages: 1, anime: [] } };
+    // Handle empty or invalid response
+    if (!data || !data.data) {
+        return { status: 'error', data: { page: 1, total_pages: 1, anime: [] } };
+    }
     
-    const animeList = Array.isArray(data.data) ? data.data : (data.data.animeList || data.data.anime || []);
+    // Wajik API returns data.animeList for ongoing/completed
+    const animeList = data.data.animeList || data.data.anime || (Array.isArray(data.data) ? data.data : []);
+    
     return {
         status: 'success',
         data: {
             page: data.pagination?.currentPage || page,
             total_pages: data.pagination?.totalPages || 10,
             anime: animeList.map((item: any) => ({
-                slug: item.slug || item.endpoint || item.animeId || '',
+                slug: item.animeId || item.slug || item.endpoint || '',
                 title: item.title || item.name || '',
                 thumbnail: item.poster || item.thumbnail || item.image || '',
-                type: item.type || item.status || 'TV',
-                latest_episode: item.episodeNew || item.episode || item.latestEpisode || '',
-                episode: item.episodeNew || item.episode || '',
-                release_time: item.releaseDay || item.updatedAt || item.release || '',
+                type: item.type || 'TV',
+                latest_episode: item.episodes ? `Episode ${item.episodes}` : (item.episodeNew || item.episode || ''),
+                episode: item.episodes ? `Episode ${item.episodes}` : (item.episodeNew || item.episode || ''),
+                release_time: item.releaseDay || item.latestReleaseDate || item.updatedAt || '',
             }))
         }
     };
 }
 
 export async function getHome(page: number = 1): Promise<HomeResponse> {
-    const data = await fetchAPI<any>(`/ongoing?page=${page}`);
-    return transformAnimeList(data, page);
+    try {
+        const data = await fetchAPI<any>(`/ongoing?page=${page}`);
+        return transformAnimeList(data, page);
+    } catch (error) {
+        console.error('getHome error:', error);
+        return { status: 'error', data: { page: 1, total_pages: 1, anime: [] } };
+    }
 }
 
 export async function getDetail(slug: string): Promise<DetailResponse> {
@@ -80,7 +90,7 @@ export async function getDetail(slug: string): Promise<DetailResponse> {
                 genres: detail.genreList?.map((g: any) => g.title || g.name || g) || detail.genres || [],
             },
             episodes: (detail.episodeList || detail.episodes || []).map((ep: any) => ({
-                slug: ep.slug || ep.endpoint || ep.episodeId || '',
+                slug: ep.episodeId || ep.slug || ep.endpoint || '',
                 episode: ep.title || ep.episode || ep.episodeNumber || '',
                 title: ep.title || ep.episode || '',
                 date: ep.releasedOn || ep.date || ep.uploadedAt || '',
@@ -118,48 +128,64 @@ export async function getWatch(slug: string): Promise<WatchResponse> {
 }
 
 export async function getSchedule(): Promise<ScheduleResponse> {
-    const data = await fetchAPI<any>('/schedule');
-    
-    if (!data || !data.data) {
+    try {
+        const data = await fetchAPI<any>('/schedule');
+        
+        if (!data || !data.data) {
+            return { status: 'success', data: {} };
+        }
+
+        const scheduleList = data.data.scheduleList || data.data || [];
+        const transformedSchedule: { [key: string]: any[] } = {};
+
+        if (Array.isArray(scheduleList)) {
+            scheduleList.forEach((daySchedule: any) => {
+                const day = daySchedule.day || daySchedule.title || 'Unknown';
+                const animeItems = daySchedule.animeList || daySchedule.anime || [];
+                transformedSchedule[day] = animeItems.map((item: any) => ({
+                    slug: item.animeId || item.slug || item.endpoint || '',
+                    title: item.title || item.name || '',
+                    thumbnail: item.poster || item.thumbnail || '',
+                    type: item.type || 'TV',
+                    latest_episode: item.episode || '',
+                    release_time: item.time || item.releaseTime || '',
+                }));
+            });
+        }
+
+        return {
+            status: 'success',
+            data: transformedSchedule
+        };
+    } catch (error) {
+        console.error('getSchedule error:', error);
         return { status: 'success', data: {} };
     }
-
-    const scheduleList = data.data.scheduleList || data.data || [];
-    const transformedSchedule: { [key: string]: any[] } = {};
-
-    if (Array.isArray(scheduleList)) {
-        scheduleList.forEach((daySchedule: any) => {
-            const day = daySchedule.day || daySchedule.title || 'Unknown';
-            transformedSchedule[day] = (daySchedule.animeList || daySchedule.anime || []).map((item: any) => ({
-                slug: item.slug || item.endpoint || item.animeId || '',
-                title: item.title || item.name || '',
-                thumbnail: item.poster || item.thumbnail || '',
-                type: item.type || 'TV',
-                latest_episode: item.episode || '',
-                release_time: item.time || item.releaseTime || '',
-            }));
-        });
-    }
-
-    return {
-        status: 'success',
-        data: transformedSchedule
-    };
 }
 
 export async function search(query: string, page: number = 1): Promise<SearchResponse> {
-    const data = await fetchAPI<any>(`/search?q=${encodeURIComponent(query)}`);
-    const transformed = transformAnimeList(data, page);
-    return {
-        ...transformed,
-        data: {
-            ...transformed.data,
-            query: query
-        }
-    };
+    try {
+        const data = await fetchAPI<any>(`/search?q=${encodeURIComponent(query)}`);
+        const transformed = transformAnimeList(data, page);
+        return {
+            ...transformed,
+            data: {
+                ...transformed.data,
+                query: query
+            }
+        };
+    } catch (error) {
+        console.error('search error:', error);
+        return { status: 'error', data: { page: 1, total_pages: 1, anime: [], query } };
+    }
 }
 
 export async function getBatch(page: number = 1): Promise<BatchResponse> {
-    const data = await fetchAPI<any>(`/completed?page=${page}`);
-    return transformAnimeList(data, page);
+    try {
+        const data = await fetchAPI<any>(`/completed?page=${page}`);
+        return transformAnimeList(data, page);
+    } catch (error) {
+        console.error('getBatch error:', error);
+        return { status: 'error', data: { page: 1, total_pages: 1, anime: [] } };
+    }
 }
