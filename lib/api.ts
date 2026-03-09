@@ -12,17 +12,22 @@ const BASE_URL = 'https://wajik-anime-api.vercel.app/otakudesu';
 
 async function fetchAPI<T>(endpoint: string): Promise<T> {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
-        next: { revalidate: 60 },
+        cache: 'no-store',
         headers: {
             'Accept': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (compatible; AnimeKompi/1.0)',
         },
     });
 
     if (!res.ok) {
-        throw new Error(`API Error: ${res.statusText}`);
+        throw new Error(`API Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    const json = await res.json();
+    if (json.statusCode && json.statusCode !== 200) {
+        throw new Error(`API returned status ${json.statusCode}`);
+    }
+    return json;
 }
 
 // Transform Wajik API response to match our types
@@ -64,67 +69,77 @@ export async function getHome(page: number = 1): Promise<HomeResponse> {
 }
 
 export async function getDetail(slug: string): Promise<DetailResponse> {
-    const data = await fetchAPI<any>(`/anime/${slug}`);
-    
-    if (!data || !data.data) {
-        throw new Error('Anime not found');
-    }
+    try {
+        const data = await fetchAPI<any>(`/anime/${slug}`);
 
-    const detail = data.data;
-    return {
-        status: 'success',
-        data: {
-            title: detail.title || detail.name || '',
-            thumbnail: detail.poster || detail.thumbnail || detail.image || '',
-            synopsis: detail.synopsis || detail.sinopsis || detail.description || '',
-            info: {
-                status: detail.status || '',
-                studio: detail.studio || '',
-                dirilis: detail.released || detail.release || detail.releaseDate || '',
-                durasi: detail.duration || detail.episodeDuration || '',
-                season: detail.season || '',
-                tipe: detail.type || '',
-                censor: detail.censor || '',
-                diposting_oleh: detail.postedBy || detail.author || '',
-                diperbarui_pada: detail.updatedAt || detail.updatedOn || '',
-                genres: detail.genreList?.map((g: any) => g.title || g.name || g) || detail.genres || [],
-            },
-            episodes: (detail.episodeList || detail.episodes || []).map((ep: any) => ({
-                slug: ep.episodeId || ep.slug || ep.endpoint || '',
-                episode: ep.title || ep.episode || ep.episodeNumber || '',
-                title: ep.title || ep.episode || '',
-                date: ep.releasedOn || ep.date || ep.uploadedAt || '',
-            }))
+        if (!data || !data.data) {
+            throw new Error('Anime not found');
         }
-    };
+
+        const detail = data.data;
+        return {
+            status: 'success',
+            data: {
+                title: detail.title || detail.name || '',
+                thumbnail: detail.poster || detail.thumbnail || detail.image || '',
+                synopsis: detail.synopsis || detail.sinopsis || detail.description || '',
+                info: {
+                    status: detail.status || '',
+                    studio: detail.studio || '',
+                    dirilis: detail.released || detail.release || detail.releaseDate || '',
+                    durasi: detail.duration || detail.episodeDuration || '',
+                    season: detail.season || '',
+                    tipe: detail.type || '',
+                    censor: detail.censor || '',
+                    diposting_oleh: detail.postedBy || detail.author || '',
+                    diperbarui_pada: detail.updatedAt || detail.updatedOn || '',
+                    genres: detail.genreList?.map((g: any) => g.title || g.name || g) || detail.genres || [],
+                },
+                episodes: (detail.episodeList || detail.episodes || []).map((ep: any) => ({
+                    slug: ep.episodeId || ep.slug || ep.endpoint || '',
+                    episode: ep.title || ep.episode || ep.episodeNumber || '',
+                    title: ep.title || ep.episode || '',
+                    date: ep.releasedOn || ep.date || ep.uploadedAt || '',
+                }))
+            }
+        };
+    } catch (error) {
+        console.error('getDetail error:', error);
+        throw error;
+    }
 }
 
 export async function getWatch(slug: string): Promise<WatchResponse> {
-    const data = await fetchAPI<any>(`/episode/${slug}`);
-    
-    if (!data || !data.data) {
-        throw new Error('Episode not found');
-    }
+    try {
+        const data = await fetchAPI<any>(`/episode/${slug}`);
 
-    const episode = data.data;
-    return {
-        status: 'success',
-        data: {
-            title: episode.title || episode.episodeTitle || '',
-            streaming_servers: (episode.streamingUrls || episode.serverList || episode.servers || []).map((server: any) => ({
-                name: server.name || server.serverName || server.quality || 'Default',
-                type: server.type || 'iframe',
-                url: server.url || server.src || server.streamUrl || '',
-            })),
-            download_links: (episode.downloadUrls || episode.downloads || episode.downloadList || []).map((dl: any) => ({
-                quality: dl.resolution || dl.quality || dl.title || '',
-                links: (dl.urls || dl.links || []).map((link: any) => ({
-                    provider: link.name || link.title || link.provider || 'Unknown',
-                    url: link.url || link.link || '',
-                }))
-            }))
+        if (!data || !data.data) {
+            throw new Error('Episode not found');
         }
-    };
+
+        const episode = data.data;
+        return {
+            status: 'success',
+            data: {
+                title: episode.title || episode.episodeTitle || '',
+                streaming_servers: (episode.streamingUrls || episode.serverList || episode.servers || []).map((server: any) => ({
+                    name: server.name || server.serverName || server.quality || 'Default',
+                    type: server.type || 'iframe',
+                    url: server.url || server.src || server.streamUrl || '',
+                })),
+                download_links: (episode.downloadUrls || episode.downloads || episode.downloadList || []).map((dl: any) => ({
+                    quality: dl.resolution || dl.quality || dl.title || '',
+                    links: (dl.urls || dl.links || []).map((link: any) => ({
+                        provider: link.name || link.title || link.provider || 'Unknown',
+                        url: link.url || link.link || '',
+                    }))
+                }))
+            }
+        };
+    } catch (error) {
+        console.error('getWatch error:', error);
+        throw error;
+    }
 }
 
 export async function getSchedule(): Promise<ScheduleResponse> {
