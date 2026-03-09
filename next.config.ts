@@ -27,7 +27,32 @@ const nextConfig: NextConfig = {
         protocol: 'http',
         hostname: 'v3.animekompi.fun',
       },
+      {
+        protocol: 'https',
+        hostname: 'otakudesu.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.otakudesu.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: 'otakudesu.lol',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.otakudesu.lol',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.myanimelist.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
     ],
+    unoptimized: true,
   },
 };
 
