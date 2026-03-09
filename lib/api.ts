@@ -7,12 +7,15 @@ import type {
     BatchResponse,
 } from './types';
 
-// Anidong API - Anime streaming API from dh.zhadev.my.id
-const BASE_URL = 'https://dh.zhadev.my.id/api/v1/anime';
+// Wajik Anime API - Multi-source anime API (Otakudesu source)
+const BASE_URL = 'https://wajik-anime-api.vercel.app/otakudesu';
 
 async function fetchAPI<T>(endpoint: string): Promise<T> {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
         next: { revalidate: 60 },
+        headers: {
+            'Accept': 'application/json',
+        },
     });
 
     if (!res.ok) {
@@ -22,7 +25,7 @@ async function fetchAPI<T>(endpoint: string): Promise<T> {
     return res.json();
 }
 
-// Transform Anidong API response to match our types
+// Transform Wajik API response to match our types
 function transformAnimeList(data: any, page: number = 1): any {
     if (!data || !data.data) return { status: 'error', data: { page: 1, total_pages: 1, anime: [] } };
     
@@ -33,12 +36,12 @@ function transformAnimeList(data: any, page: number = 1): any {
             page: data.pagination?.currentPage || page,
             total_pages: data.pagination?.totalPages || 10,
             anime: animeList.map((item: any) => ({
-                slug: item.slug || item.endpoint || item.id || '',
+                slug: item.slug || item.endpoint || item.animeId || '',
                 title: item.title || item.name || '',
                 thumbnail: item.poster || item.thumbnail || item.image || '',
                 type: item.type || item.status || 'TV',
-                latest_episode: item.latestEpisode || item.episode || '',
-                episode: item.episode || item.latestEpisode || '',
+                latest_episode: item.episodeNew || item.episode || item.latestEpisode || '',
+                episode: item.episodeNew || item.episode || '',
                 release_time: item.releaseDay || item.updatedAt || item.release || '',
             }))
         }
@@ -46,12 +49,12 @@ function transformAnimeList(data: any, page: number = 1): any {
 }
 
 export async function getHome(page: number = 1): Promise<HomeResponse> {
-    const data = await fetchAPI<any>(`/home/${page}`);
+    const data = await fetchAPI<any>(`/ongoing?page=${page}`);
     return transformAnimeList(data, page);
 }
 
 export async function getDetail(slug: string): Promise<DetailResponse> {
-    const data = await fetchAPI<any>(`/detail/${slug}`);
+    const data = await fetchAPI<any>(`/anime/${slug}`);
     
     if (!data || !data.data) {
         throw new Error('Anime not found');
@@ -128,7 +131,7 @@ export async function getSchedule(): Promise<ScheduleResponse> {
         scheduleList.forEach((daySchedule: any) => {
             const day = daySchedule.day || daySchedule.title || 'Unknown';
             transformedSchedule[day] = (daySchedule.animeList || daySchedule.anime || []).map((item: any) => ({
-                slug: item.slug || item.endpoint || item.id || '',
+                slug: item.slug || item.endpoint || item.animeId || '',
                 title: item.title || item.name || '',
                 thumbnail: item.poster || item.thumbnail || '',
                 type: item.type || 'TV',
@@ -157,6 +160,6 @@ export async function search(query: string, page: number = 1): Promise<SearchRes
 }
 
 export async function getBatch(page: number = 1): Promise<BatchResponse> {
-    const data = await fetchAPI<any>(`/completed/${page}`);
+    const data = await fetchAPI<any>(`/completed?page=${page}`);
     return transformAnimeList(data, page);
 }
