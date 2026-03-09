@@ -11,10 +11,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://animekompi.fun'),
+  metadataBase: new URL('https://prabowo.me'),
   title: {
-    default: 'AnimeKompi - Nonton Anime Subtitle Indonesia Gratis',
-    template: '%s | AnimeKompi'
+    default: 'PrabowoSawit - Nonton Anime Subtitle Indonesia Gratis',
+    template: '%s | PrabowoSawit'
   },
   description: 'Nonton anime subtitle Indonesia terbaru dan terlengkap secara gratis. Streaming anime ongoing, completed, dan batch download dengan kualitas HD.',
   keywords: [
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     'anime ongoing',
     'anime completed',
     'batch anime',
-    'animekompi'
+    'prabowosawit'
   ],
-  authors: [{ name: 'AnimeKompi' }],
-  creator: 'AnimeKompi',
-  publisher: 'AnimeKompi',
+  authors: [{ name: 'PrabowoSawit' }],
+  creator: 'PrabowoSawit',
+  publisher: 'PrabowoSawit',
   formatDetection: {
     email: false,
     address: false,
@@ -42,22 +42,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'id_ID',
-    url: 'https://animekompi.fun',
-    siteName: 'AnimeKompi',
-    title: 'AnimeKompi - Nonton Anime Subtitle Indonesia Gratis',
+    url: 'https://prabowo.me',
+    siteName: 'PrabowoSawit',
+    title: 'PrabowoSawit - Nonton Anime Subtitle Indonesia Gratis',
     description: 'Nonton anime subtitle Indonesia terbaru dan terlengkap secara gratis. Streaming anime ongoing, completed, dan batch download dengan kualitas HD.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AnimeKompi - Nonton Anime Sub Indo',
+        alt: 'PrabowoSawit - Nonton Anime Sub Indo',
       }
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AnimeKompi - Nonton Anime Subtitle Indonesia Gratis',
+    title: 'PrabowoSawit - Nonton Anime Subtitle Indonesia Gratis',
     description: 'Nonton anime subtitle Indonesia terbaru dan terlengkap secara gratis.',
     images: ['/og-image.jpg'],
   },
@@ -72,21 +72,15 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'dIdb0mScWZINp_KIjq2Pzaav4il0UUux5qaL1jpMCWs',
-    yandex: 'f7e08788b0922eec',
-  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="id" className="dark" suppressHydrationWarning>
       <head>
-        <link rel="canonical" href="https://animekompi.fun" />
+        <link rel="canonical" href="https://prabowo.me" />
         <meta name="theme-color" content="#0f172a" />
       </head>
       <body className={`${inter.variable} font-sans min-h-screen flex flex-col bg-slate-950 text-white antialiased`} suppressHydrationWarning>
